@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="d-flex flex-column align-items-center justify-content-center p-2">
+        <button pButton pRipple label="Generate Game PIN" (click)="generateCode()"
+            class="p-button-success mb-2"></button>
+
+        <form (ngSubmit)="sendMsg()" [formGroup]="codeForm"
+            class="d-flex flex-column align-items-center justify-content-center p-2">
+            <p-inputNumber formControlName="message" mode="decimal" inputId="withoutgrouping" [useGrouping]="false"
+                class="mb-2">
+            </p-inputNumber>
+
+            <button pButton pRipple label="Join Game" type="submit" class="p-button-success mb-2">
+            </button>
+        </form>
+
+        <p-dropdown [options]="board" [(ngModel)]="selectedBox" (onChange)="onBoxChange()"
+            placeholder="Select a box">
+        </p-dropdown>
+
+        <p-table [value]="messages" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>data</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-msg>
+                <tr>
+                    <td>{{ msg.data }}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+
+
+    </div>
+</div>
