@@ -4,5 +4,11 @@ namespace lesgo.Domain.Dto
     {
         public string Action { get; set; }
         public string Data { get; set; }
+
+        public WsRequest( string action, string data)
+        {
+            Action = action;
+            Data = data;
+        }        
     }
 }

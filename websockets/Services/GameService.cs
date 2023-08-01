@@ -3,39 +3,37 @@ namespace lesgo.Services
     public class GameService
     {
         public bool isOver = false;
-        public int[] board = new int[25];
+        public Dictionary<int, int> amounts = new Dictionary<int, int>();
 
         public int selected = 0;
 
+        public int movesCount = 0;
+
         public GameService()
         {
-            board[0] = 1;
-            for (int i = 1; i < 25; i++)
-            {
-                board[i] = board[i - 1] * 2 ;
-            }
+           amounts.Add(1,100);
+           for (int i = 2; i <=20; i++)
+           {
+               amounts.Add(i, 100 * i);
+           }
         }
-
-        public int[] GetBoard()
-        {
-            return board;
-        }
-
-        public int getBoardValue(int index)
-        {
-            return board[index];
-        }
-
-        
+            
 
         public bool IsOver()
         {
             return isOver;
         }
 
-        public void SelectBox(int index)
+        public int  SelectBox(int index)
         {
-            selected = index;
+           if (movesCount==0){
+                selected = index;     
+                movesCount++;     
+                return 0;
+           }    
+           movesCount++;                
+           return amounts[index];                    
+                      
         }
 
     }

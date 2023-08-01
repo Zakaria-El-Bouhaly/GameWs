@@ -8,10 +8,13 @@ import { ButtonModule } from 'primeng/button';
 import { TimelineModule } from 'primeng/timeline';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
+import { BoxComponent } from './components/box/box.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    BoxComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import { DropdownModule } from 'primeng/dropdown';
     TimelineModule,
     TableModule,
     DropdownModule,
+    CardModule
     
   ],
   providers: [],

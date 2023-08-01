@@ -15,10 +15,10 @@ export class ResponseHandlerService {
 
     console.log(message.Action);
     
-    if (message.Action == "selectBox") {
+    if (message.Action == "revealBox") {
       console.log(message.Data);
-      // string to number array      
-      this.gameService.board.next(JSON.parse(message.Data));
+      let Data=JSON.parse(message.Data);      
+      this.gameService.removeIndex(Data.index,Data.amount);
     }
     if (message.action == "isOver") {
       this.gameService.isOver.next(response.isOver);

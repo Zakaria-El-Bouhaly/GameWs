@@ -1,6 +1,7 @@
 using System.Net.WebSockets;
 using lesgo.Domain.Dto;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace lesgo.Services
 {
@@ -21,10 +22,14 @@ namespace lesgo.Services
             switch (request.Action)
             {
                 case "selectBox":
-                    int[] board = _gameService.GetBoard();
                     int selected = int.Parse(request.Data);
-                    _gameService.SelectBox(selected);
-                    await send("selectBox", JsonConvert.SerializeObject(board));
+                    int amount = _gameService.SelectBox(selected);
+
+                    JObject boxInfo = new JObject();
+                    boxInfo.Add("index", selected);
+                    boxInfo.Add("amount", amount);
+
+                    await send("revealBox", JsonConvert.SerializeObject(boxInfo));
                     break;
                 default:
                     break;
@@ -34,9 +39,7 @@ namespace lesgo.Services
 
         public async Task send(string action, string data)
         {
-            WsRequest response = new WsRequest();
-            response.Action = action;
-            response.Data = data;
+            WsRequest response = new WsRequest(action, data);
             string responseString = JsonConvert.SerializeObject(response);
             await _webSocketHandler.SendMessageToAllAsync(responseString);
         }

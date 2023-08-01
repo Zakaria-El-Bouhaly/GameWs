@@ -20,43 +20,42 @@ export class HomeComponent {
     message: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
   });
 
-  board: number[] = [1,2,4];
 
-  selectedBox: number = 6;
+  board: any;
+  revealedBoxes: any;
 
   constructor(
     private webSocketService: WebSocketService,
     private responseHandlerService: ResponseHandlerService,
-    private gameService: GameService
-  ) { }
+    private gameService: GameService) { }
+
+
 
   ngOnInit(): void {
     this.webSocketService.connect().subscribe((data: any) => {
       this.responseHandlerService.handleResponse(data);
+      this.messages.push(JSON.parse(data.Message));      
     });
 
     this.gameService.board.subscribe((data: any) => {
+      console.log(data);
       this.board = data;
+    });
+
+    this.gameService.revealedBoxes.subscribe((data: any) => {      
+      this.revealedBoxes = data;
+      console.log(this.revealedBoxes);
     });
   }
 
-  sendMsg() {
-    this.webSocketService.send(this.codeForm.value)
+
+  sendNumber(num: number) {
+    console.log(num);
+    let message = {
+      "Action": "selectBox",
+      "Data": num
+    }
+    this.webSocketService.send(message);
   }
 
-  onBoxChange() {
-    let body = {
-      "action": "selectBox",
-      "data": this.selectedBox
-    }
-    this.webSocketService.send(body);
-  }
-
-  generateCode() {
-    let body = {
-      "action": "generateCode",
-      "data": ''
-    }
-    this.webSocketService.send(body);
-  }
 }
