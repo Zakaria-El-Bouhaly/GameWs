@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace lesgo.Services
 {
-    public abstract class WebSocketHandler
+    public class WebSocketHandler
     {
         protected ConnectionManager WebSocketConnectionManager { get; set; }
 
@@ -56,7 +56,6 @@ namespace lesgo.Services
                     await SendMessageAsync(pair.Value, message);
             }
         }
-
-        public abstract Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer);
+       
     }
 }

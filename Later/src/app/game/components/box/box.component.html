@@ -1,10 +1,10 @@
-<p-card [header]="num+1">
+<p-card [header]="num" [subheader]="amount">
 
     <ng-template pTemplate="header">
         <img alt="Card" src="assets/delivery-box.png" [style]="{'width':'100px'}" />
     </ng-template>
 
-    <ng-template pTemplate="footer">
+    <ng-template pTemplate="footer" *ngIf="amount == 0">
         <p-button label="Save" icon="pi pi-check" (click)="sendNumber(num)">
         </p-button>
     </ng-template>

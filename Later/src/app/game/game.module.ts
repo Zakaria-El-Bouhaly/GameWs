@@ -10,6 +10,11 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { BoxComponent } from './components/box/box.component';
 import { CardModule } from 'primeng/card';
+import { FieldsetModule } from 'primeng/fieldset';
+import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +31,11 @@ import { CardModule } from 'primeng/card';
     TimelineModule,
     TableModule,
     DropdownModule,
-    CardModule
+    CardModule,
+    FieldsetModule,
+    DialogModule,
+    RippleModule,
+    SweetAlert2Module
     
   ],
   providers: [],

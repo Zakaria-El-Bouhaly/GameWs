@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSingleton<ConnectionManager>();
 
-builder.Services.AddSingleton<WebSocketHandler, ChatWsHandler>();
+builder.Services.AddSingleton<WebSocketHandler>();
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<UserActionHandler>();
 

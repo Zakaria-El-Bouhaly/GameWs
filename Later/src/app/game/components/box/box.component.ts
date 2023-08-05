@@ -9,11 +9,14 @@ export class BoxComponent {
 
 
   @Input() num: any;
-  @Output() selectIndex= new EventEmitter<number>();
+  @Input() amount: any = 0;
 
-  
-  sendNumber(num:any) {
-    this.selectIndex.emit(num);   
+  @Output() selectIndex = new EventEmitter<number>();
+
+
+
+  sendNumber(num: any) {
+    this.selectIndex.emit(num);
   }
 
 }
