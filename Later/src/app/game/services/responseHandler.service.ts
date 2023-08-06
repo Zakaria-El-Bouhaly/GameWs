@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import Swal from 'sweetalert2';
+import { GameState } from '../Models/gamestate.model';
 import { GameService } from './game.service';
 
 @Injectable({
@@ -18,6 +20,13 @@ export class ResponseHandlerService {
     let Data: any;
     try {
       Data = JSON.parse(message.Data);
+      let gameStatus: GameState = {
+        isOver: Data.isOver,
+        isStarted: Data.isStarted,
+        turn: Data.turn
+      }
+      this.gameService.updateGameStatus(gameStatus);
+
     } catch {
       Data = message.Data;
     }
@@ -27,45 +36,46 @@ export class ResponseHandlerService {
     console.log(message.Action);
     console.log(message.Data);
 
+    if (message.Action == "connected") {
+      localStorage.setItem("playerRole", "1");
+      this.gameService.gamePin.next(Data);      
+    }        
+    if (message.Action == "joined") {
+      localStorage.setItem("playerRole", "2");
+    }
+
 
     if (message.Action == "startGame") {
-      this.gameService.setAmounts(JSON.parse(Data.amounts), Data.isOver, Data.isStarted, Data.turn);
+      this.gameService.setAmounts(JSON.parse(Data.amounts));
     }
 
     if (message.Action == "revealBox") {
-      this.gameService.removeIndex(Data.index, Data.amount, Data.isOver, Data.isStarted, Data.turn);
+      this.gameService.removeIndex(Data.index, Data.amount);
+      if (Data.isOver) {
+        this.gameService.selectedAmount.next(Data.selected);
+      }
     }
 
     if (message.Action == "makeOffer") {
-      this.gameService.offerAmount.next(Data.amount);
+      this.gameService.offerAmount.next(Data.offer);
     }
 
     if (message.Action == "acceptOffer") {
-      this.gameService.updateGameStatus(Data.isOver, Data.isStarted, Data.turn);
+      this.gameService.updateGameStatus(Data.isOver);
+      this.gameService.selectedAmount.next(Data.selected);
     }
 
     if (message.Action == "refuseOffer") {
-      this.gameService.updateGameStatus(Data.isOver, Data.isStarted, Data.turn);
+      if (localStorage.getItem("playerRole") == "2") {
+        Swal.fire({
+          title: 'Offer refused',
+          text: 'The player refused your offer',
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok'
+        });
+      }
     }
-
-    if (message.Action == "offerSwitch") {
-      this.gameService.offerSwitch.next(true);
-    }
-
-    if (message.Action == "refuseSwitch") {
-      this.gameService.offerSwitch.next(false);
-      this.gameService.updateGameStatus(Data.isOver, Data.isStarted, Data.turn);
-    }
-
-    if (message.Action == "swicthBox") {
-      this.gameService.offerSwitch.next(false);
-      this.gameService.updateGameStatus(Data.isOver, Data.isStarted, Data.turn);
-    }
-
-    if (message.Action == "endGame") {
-      this.gameService.updateGameStatus(Data.isOver, Data.isStarted, Data.turn);
-    }
-
 
   }
 

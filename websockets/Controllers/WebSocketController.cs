@@ -12,34 +12,44 @@ namespace lesgo.Controllers
 
     public class WebSocketController : ControllerBase
     {
-        private readonly WebSocketHandler _webSocketHandler;
+        private readonly WebSocketHandler _gamewebSocketHandler;
         private readonly UserActionHandler _userActionHandler;
 
 
 
-        public WebSocketController(WebSocketHandler webSocketHandler, UserActionHandler userActionHandler)
+        public WebSocketController(WebSocketHandler gameWsHandler, UserActionHandler userActionHandler)
         {
-            _webSocketHandler = webSocketHandler;
+            _gamewebSocketHandler = gameWsHandler;
             _userActionHandler = userActionHandler;
         }
 
-        [Route("/start")]
-        public async Task Get()
+        [Route("/start/{id?}")]
+        public async Task Get(string? id)
         {
-
 
             var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 
-            await _webSocketHandler.OnConnected(socket);
+            string gameId = string.Empty;
+            // get the id from the query string            
+            if (id != null)
+            {
+                gameId = await _gamewebSocketHandler.JoinGame(socket, id);
+            }
+            else
+            {
+                gameId = await _gamewebSocketHandler.StartGame(socket);
+            }
 
-            await ReceiveMessages(socket);
+            await ReceiveMessages(socket, gameId);
         }
 
-        private async Task ReceiveMessages(WebSocket webSocket)
+        private async Task ReceiveMessages(WebSocket webSocket, string gameId)
         {
             var buffer = new byte[1024 * 4];
             var receiveResult = await webSocket.ReceiveAsync(
                 new ArraySegment<byte>(buffer), CancellationToken.None);
+
+            _userActionHandler.SetGameId(gameId);
 
 
             while (!receiveResult.CloseStatus.HasValue)
@@ -52,20 +62,31 @@ namespace lesgo.Controllers
                 try
                 {
                     string msgContent = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
-                    Console.WriteLine("msgContent: " + msgContent.Length);
+
                     WsRequest? request = JsonConvert.DeserializeObject<WsRequest>(msgContent);
 
-                    await _userActionHandler.Handle(webSocket, request);
+                    await _userActionHandler.Handle(request);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("error parsing json");
+
                 }
             }
 
-            await _webSocketHandler.OnDisconnected(webSocket);
+            try
+            {
+
+                await _gamewebSocketHandler.OnDisconnected(webSocket);
+            }
+            catch (Exception e)
+            {
+
+            }
 
         }
+
+
+
 
     }
 

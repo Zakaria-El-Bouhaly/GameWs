@@ -11,75 +11,72 @@ namespace lesgo.Services
         private readonly WebSocketHandler _webSocketHandler;
         private readonly GameService _gameService;
 
+        private string _gameId;
+
         public UserActionHandler(WebSocketHandler webSocketHandler, GameService gameService)
         {
             _webSocketHandler = webSocketHandler;
             _gameService = gameService;
+            _gameId = string.Empty;
         }
 
-        public async Task Handle(WebSocket webSocket, WsRequest request)
+        public void SetGameId(string gameId)
         {
+            _gameId = gameId;
+        }
 
+        public async Task Handle(WsRequest request)
+        {
+            // get game status isOver, isStarted, turn, movesCount
+            JObject gameStatus = GameStatus();
 
-            if (request.Action == "startGame" || request.Action == "resetGame")
+            if (request.Action == "startGame" || request.Action == "restartGame")
             {
                 int[] amounts = _gameService.InitializeGame();
-                JObject gameStatus = GameStatus();
+                gameStatus = GameStatus();
                 gameStatus.Add("amounts", JsonConvert.SerializeObject(amounts));
-                await send("startGame", JsonConvert.SerializeObject(gameStatus));
+                await send("startGame", gameStatus);
             }
 
             if (request.Action == "selectBox")
+
             {
+                // player selected a box
                 int selected = int.Parse(request.Data);
                 int amount = _gameService.SelectBox(selected);
 
-                JObject gameStatus = GameStatus();
+                gameStatus = GameStatus();
+
+                // if the game is over, send the initial selected amount
                 gameStatus.Add("index", selected);
-                gameStatus.Add("amount", amount);
-                await send("revealBox", JsonConvert.SerializeObject(gameStatus));
+                if (amount != -1)
+                    gameStatus.Add("amount", amount);
+                else
+                    gameStatus.Add("selected", _gameService.GetSelectedAmount());
+
+                await send("revealBox", gameStatus);
             }
 
             if (request.Action == "makeOffer") // turn 2
             {
-                await send("makeOffer", request.Data);
+                // send offer to the other player
+                gameStatus.Add("offer", request.Data);
+                await send("makeOffer", gameStatus);
             }
 
             if (request.Action == "acceptOffer") // turn 1
             {
                 _gameService.EndGame();
-                JObject gameStatus = GameStatus();
-                await send("acceptOffer", JsonConvert.SerializeObject(gameStatus));
+                gameStatus = GameStatus();
+                gameStatus.Add("selected", _gameService.GetSelectedAmount());
+                await send("acceptOffer", gameStatus);
             }
 
             if (request.Action == "refuseOffer") // turn 1
             {
-
-                JObject gameStatus = GameStatus();
-                await send("refuseOffer", JsonConvert.SerializeObject(gameStatus));
-            }
-
-
-            if (request.Action == "offerSwitch") // turn 2
-            {
-
-                string message = "would you like to switch?";
-                await send("offerSwitch", message);
-            }
-
-            if (request.Action == "switchBox") // turn 1
-            {
-                int selected = int.Parse(request.Data);
-                _gameService.SwitchBox(selected);
-                JObject gameStatus = GameStatus();
-                await send("swicthBox", JsonConvert.SerializeObject(gameStatus));
-            }
-
-            if (request.Action == "refuseSwitch")
-            {
-                _gameService.refuseSwitch();
-                JObject gameStatus = GameStatus();
-                await send("refuseSwitch", JsonConvert.SerializeObject(gameStatus));
+                _gameService.refuseOffer();
+                gameStatus = GameStatus();
+                await send("refuseOffer", gameStatus);
             }
 
         }
@@ -96,11 +93,11 @@ namespace lesgo.Services
             return gameStatus;
         }
 
-        public async Task send(string action, string data)
+        public async Task send(string action, JObject data)
         {
-            WsRequest response = new WsRequest(action, data);
+            WsRequest response = new WsRequest(action, JsonConvert.SerializeObject(data));
             string responseString = JsonConvert.SerializeObject(response);
-            await _webSocketHandler.SendMessageToAllAsync(responseString);
+            await _webSocketHandler.SendToAllById(_gameId, responseString);
         }
     }
 }

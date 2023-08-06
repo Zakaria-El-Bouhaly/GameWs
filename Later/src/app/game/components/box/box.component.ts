@@ -8,14 +8,24 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class BoxComponent {
 
 
-  @Input() num: any;
-  @Input() amount: any = 0;
+  @Input() num: number = 0;
+  @Input() amount: number = 0;
+  @Input() isDisabled: boolean = false;
 
   @Output() selectIndex = new EventEmitter<number>();
 
 
 
-  sendNumber(num: any) {
+  img: string = "";
+
+
+
+  ngOnInit(): void {
+    this.img = "box" + (Math.floor(Math.random() * 7) + 1) + ".png";
+  }
+
+
+  sendNumber(num: number) {
     this.selectIndex.emit(num);
   }
 

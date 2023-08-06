@@ -2,22 +2,25 @@ namespace lesgo.Services
 {
     public class GameService
     {
-        public bool isStarted = false;
-        public bool isOver = false;
-        public Dictionary<int, int> amounts = new Dictionary<int, int>();
-        public int moves = 0;
+        private bool isStarted = false;
+        private bool isOver = false;
+        private Dictionary<int, int> amounts = new Dictionary<int, int>();
+        private int moves = 0;
 
-        public int selectedBox = 0;
-        public int turn = 1;
+        private int selectedBox = 0;
+        private int turn = 1;
 
-        Random rnd = new Random();
+        private Random rnd = new Random();
 
         public GameService()
         {
         }
 
-        public int[] InitializeGame()
+        public int[]? InitializeGame()
         {
+
+
+
             // empty the dictionary
             amounts.Clear();
             moves = 0;
@@ -47,6 +50,11 @@ namespace lesgo.Services
             return turn;
         }
 
+        public int GetSelectedAmount()
+        {
+            return amounts[selectedBox];
+        }
+
         public int GetMoves()
         {
             return moves;
@@ -71,7 +79,7 @@ namespace lesgo.Services
 
         public int SelectBox(int index)
         {
-            if (isOver || !isStarted || turn == 2)
+            if (!IsAllowed() || turn == 2)
             {
                 return -1;
             }
@@ -87,13 +95,13 @@ namespace lesgo.Services
             if (moves % 4 == 0)
             {
                 turn = 2;
-                return 0;
+                return amounts[index];
             }
 
             if (moves == 20)
             {
                 isOver = true;
-                return 0;
+                return -1;
             }
 
             return amounts[index];
@@ -103,43 +111,21 @@ namespace lesgo.Services
 
         public void refuseOffer()
         {
-            // if (isOver || !isStarted || turn == 1)
-            // {
-            //     return;
-            // }
-
-            turn = 1;
+            if (IsAllowed() && turn == 2)
+                turn = 1;
         }
 
-        public void SwitchBox(int newBox)
-        {
-            // if (isOver || !isStarted || turn == 2)
-            // {
-            //     return;
-            // }
-
-            selectedBox = newBox;
-            turn = 1;
-
-        }
-
-        public void refuseSwitch()
-        {
-            // if (isOver || !isStarted || turn == 1)
-            // {
-            //     return;
-            // }
-
-            turn = 1;
-        }
         public void EndGame()
         {
-            // if (isOver || !isStarted || turn == 1)
-            // {
-            //     return;
-            // }
+            if (IsAllowed())
+                isOver = true;
+        }
 
-            isOver = true;
+        // validate the user's move
+        public bool IsAllowed()
+        {
+            return (!isOver && isStarted);
+
         }
 
     }

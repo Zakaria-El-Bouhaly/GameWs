@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { GameRoutingModule } from './game-routing.module';
-import { HomeComponent } from './home/home.component';
+import { GameComponent } from './main/game.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -14,18 +14,20 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
-    BoxComponent
+    GameComponent,
+    BoxComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
-    GameRoutingModule  ,
+    GameRoutingModule,
     FormsModule,
-    InputNumberModule  ,
+    InputNumberModule,
     ButtonModule,
     ReactiveFormsModule,
     TimelineModule,
@@ -36,7 +38,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     DialogModule,
     RippleModule,
     SweetAlert2Module
-    
+
   ],
   providers: [],
   bootstrap: []

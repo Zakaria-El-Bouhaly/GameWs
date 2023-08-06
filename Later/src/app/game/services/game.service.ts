@@ -1,37 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, retryWhen, Subject } from 'rxjs';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { environment } from 'src/app/env';
+import { Subject } from 'rxjs';
+import { GameState } from '../Models/gamestate.model';
+import { box } from '../Models/box.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  value: any = [];
+  value: box[] = [];
 
-  board: Subject<any> = new Subject<any>();
+  board: Subject<box[]> = new Subject<box[]>();
 
-  revealedValues: any = [];
-  revealedBoxes: BehaviorSubject<any> = new BehaviorSubject<any>(this.revealedValues);
+  availableAmounts: number[] = [];
+  availableAmountsSubject: Subject<number[]> = new Subject<number[]>();
 
-  availableAmounts: any = [];
-  availableAmountsSubject: BehaviorSubject<any> = new BehaviorSubject<any>(this.availableAmounts);
-
-  isStarted: Subject<boolean> = new Subject<boolean>();
-  isOver: Subject<boolean> = new Subject<boolean>();
-  turn: Subject<any> = new Subject<any>();
-
-  offerAmount: Subject<any> = new Subject<any>();
-
-  offerSwitch: Subject<boolean> = new Subject<boolean>();
+  gameState: Subject<GameState> = new Subject<GameState>();
 
 
-  setAmounts(amounts: any, isOver: boolean, isStarted: boolean, turn: any) {
+  offerAmount: Subject<number> = new Subject<number>();
+  
+  gamePin: Subject<string> = new Subject<string>();
 
-    this.updateGameStatus(isOver, isStarted, turn);
+  selectedAmount: Subject<number> = new Subject<number>();
 
-    this.value = Array.from(Array(20).keys()).map(x => JSON.parse('{"index": ' + (++x) + ', "amount": ' + 0 + '}'));
+
+  setAmounts(amounts: number[]) {
+
+
+    this.value = Array.from(Array(20).keys()).map(x => ({ index: ++x, amount: 0 }));
     console.log("board", this.value);
     this.board.next(this.value);
 
@@ -43,21 +40,17 @@ export class GameService {
   }
 
 
-  removeIndex(index: number, amount: number, isOver: boolean, isStarted: boolean, turn: any) {
+  removeIndex(index: number, amount: number) {
 
-    this.updateGameStatus(isOver, isStarted, turn);
-
-    this.value = this.value.filter((item: any) => item.index != index);
+    this.value = this.value.filter((item: box) => item.index != index);
     this.board.next(this.value);
 
-    this.availableAmounts = this.availableAmounts.filter((item: any) => item != amount);
+    this.availableAmounts = this.availableAmounts.filter((item: number) => item != amount);
     this.availableAmountsSubject.next(this.availableAmounts);
   }
 
-  updateGameStatus(isOver: boolean, isStarted: boolean, turn: any) {
-    this.isOver.next(isOver);
-    this.isStarted.next(isStarted);
-    this.turn.next(turn);
+  updateGameStatus(gamestate: GameState) {
+    this.gameState.next(gamestate);
   }
 
 

@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
 
-public class ConnectionManager
+public  class ConnectionManager
 {
-    private ConcurrentDictionary<string, WebSocket> _sockets = new ConcurrentDictionary<string, WebSocket>();
+    protected ConcurrentDictionary<string, WebSocket> _sockets = new ConcurrentDictionary<string, WebSocket>();
 
     public WebSocket GetSocketById(string id)
     {
@@ -15,6 +15,11 @@ public class ConnectionManager
         return _sockets;
     }
 
+    public int GetCount()
+    {
+        return _sockets.Count;
+    }
+
     public string GetId(WebSocket socket)
     {
 
@@ -23,10 +28,11 @@ public class ConnectionManager
 
     public void AddSocket(WebSocket socket)
     {
-        if (_sockets.Count < 2)
-        {
-            _sockets.TryAdd(CreateConnectionId(), socket);
-        }
+
+
+
+        _sockets.TryAdd(CreateConnectionId(), socket);
+
 
     }
 
@@ -41,8 +47,13 @@ public class ConnectionManager
                                 cancellationToken: CancellationToken.None);
     }
 
-    private string CreateConnectionId()
+    protected string CreateConnectionId()
     {
         return Guid.NewGuid().ToString();
+    }
+
+    public void AddWithId(WebSocket socket, string id)
+    {
+        _sockets.TryAdd(id + CreateConnectionId(), socket);
     }
 }

@@ -1,0 +1,12 @@
+<p-fieldset legend="Welcome" class="m-2">
+    <div class="d-flex flex-column align-items-center justify-content-center p-2">
+
+        <p-button pRipple label="Create a game" styleClass="p-button-outlined p-button-success" icon="pi pi-play"
+            (click)="createGame()"></p-button>
+
+        <p-inputNumber inputId="integeronly" [(ngModel)]="PIN" class="m-2"> </p-inputNumber>
+
+        <p-button pRipple label="Join" styleClass="p-button-outlined p-button-success m-2" icon="pi pi-user-plus"
+            (click)="joinGame()"></p-button>
+    </div>
+</p-fieldset>

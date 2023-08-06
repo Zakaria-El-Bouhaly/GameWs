@@ -10,11 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSingleton<ConnectionManager>();
+
 
 builder.Services.AddSingleton<WebSocketHandler>();
-builder.Services.AddSingleton<GameService>();
+builder.Services.AddSingleton<ConnectionManager>();
 builder.Services.AddSingleton<UserActionHandler>();
+builder.Services.AddSingleton<GameService>();
 
 
 builder.Services.AddControllers();

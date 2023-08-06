@@ -1,12 +1,16 @@
-<p-card [header]="num" [subheader]="amount">
+<p-card header="{{num}}" >
 
     <ng-template pTemplate="header">
-        <img alt="Card" src="assets/delivery-box.png" [style]="{'width':'100px'}" />
+        <div class="d-flex justify-content-between">
+            <img alt="Card" src="{{'assets/'+img}}" [style]="{'width':'100px'}" class="m-auto" />
+        </div>
+
     </ng-template>
 
     <ng-template pTemplate="footer" *ngIf="amount == 0">
-        <p-button label="Save" icon="pi pi-check" (click)="sendNumber(num)">
-        </p-button>
+        <p-button pRipple label="Select" (click)="sendNumber(num)" [disabled]="isDisabled"
+            styleClass="p-button-outlined p-button-success"></p-button>
+
     </ng-template>
 
 </p-card>
