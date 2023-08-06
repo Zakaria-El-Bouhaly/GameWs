@@ -21,6 +21,8 @@ export class GameService {
   offerAmount: Subject<number> = new Subject<number>();
   
   gamePin: Subject<string> = new Subject<string>();
+  playerCount: Subject<number> = new Subject<number>();
+  playerRole: Subject<number> = new Subject<number>();
 
   selectedAmount: Subject<number> = new Subject<number>();
 

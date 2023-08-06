@@ -1,12 +1,13 @@
 using System.Net.WebSockets;
 using System.Text;
+using lesgo.Domain.Dto;
 using lesgo.Dto;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace lesgo.Services
 {
-    public  class WebSocketHandler
+    public class WebSocketHandler
     {
         protected ConnectionManager WebSocketConnectionManager { get; set; }
         private Random random = new Random();
@@ -63,11 +64,22 @@ namespace lesgo.Services
         {
             int rdmId = random.Next(1000, 9999);
 
-            WebSocketConnectionManager.AddWithId(socket, rdmId.ToString());
+            try
+            {
+                WebSocketConnectionManager.AddWithId(socket, rdmId.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
             JObject jObject = new JObject();
-            jObject.Add("Action", "connected");
-            jObject.Add("Data", rdmId.ToString());
-            await SendMessageAsync(socket, JsonConvert.SerializeObject(jObject));
+            jObject.Add("code", rdmId.ToString());
+            jObject.Add("playerCount", WebSocketConnectionManager.GetCountWithId(rdmId.ToString()));
+
+            WsRequest wsRequest = new WsRequest("connected", JsonConvert.SerializeObject(jObject));
+
+            await SendMessageAsync(socket, JsonConvert.SerializeObject(wsRequest));
             return rdmId.ToString();
         }
 
@@ -76,10 +88,13 @@ namespace lesgo.Services
         public async Task<string> JoinGame(WebSocket socket, string id)
         {
             WebSocketConnectionManager.AddWithId(socket, id);
+
             JObject jObject = new JObject();
-            jObject.Add("Action", "joined");
-            jObject.Add("Data", id);
-            await SendMessageAsync(socket, JsonConvert.SerializeObject(jObject));
+            jObject.Add("id", id);
+            jObject.Add("playerCount", WebSocketConnectionManager.GetCountWithId(id));
+            WsRequest wsRequest = new WsRequest("joined", JsonConvert.SerializeObject(jObject));
+
+            await SendToAllById(id, JsonConvert.SerializeObject(wsRequest));
             return id;
         }
 

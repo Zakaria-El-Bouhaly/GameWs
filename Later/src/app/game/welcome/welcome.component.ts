@@ -9,12 +9,15 @@ import { WebSocketService } from '../services/websocket.service';
 })
 export class WelcomeComponent {
   PIN: string = "";
+  
+
   constructor(
     private webSocketService: WebSocketService,
     private responseHandlerService: ResponseHandlerService,
   ) { }
 
   createGame() {
+    
     this.webSocketService.setUrl("");
     // connect to the websocket
     this.webSocketService.connect().subscribe((data: any) => {

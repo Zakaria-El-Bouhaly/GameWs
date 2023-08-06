@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
 
-public  class ConnectionManager
+public class ConnectionManager
 {
     protected ConcurrentDictionary<string, WebSocket> _sockets = new ConcurrentDictionary<string, WebSocket>();
 
@@ -54,6 +54,17 @@ public  class ConnectionManager
 
     public void AddWithId(WebSocket socket, string id)
     {
+        // check the count of the sockets with the same id
+        if (int.Parse(GetCountWithId(id)) >= 2)
+        {
+            throw new Exception("There are already 2 players with the same id");
+        }
+
         _sockets.TryAdd(id + CreateConnectionId(), socket);
+    }
+
+    public string GetCountWithId(string id)
+    {        
+        return _sockets.Where(p => p.Key.Contains(id)).Count().ToString();
     }
 }

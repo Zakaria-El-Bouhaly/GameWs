@@ -117,8 +117,10 @@ namespace lesgo.Services
 
         public void EndGame()
         {
-            if (IsAllowed())
+            if (IsAllowed()){
                 isOver = true;
+                isStarted = false;
+            }
         }
 
         // validate the user's move

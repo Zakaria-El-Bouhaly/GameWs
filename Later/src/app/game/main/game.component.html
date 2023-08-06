@@ -1,6 +1,7 @@
 <div class="container-fluid">
 
-    <app-welcome *ngIf="!gameState.isStarted"></app-welcome>
+    <app-welcome *ngIf="!gameState.isStarted   && playerCount < 2" >        
+    </app-welcome>
 
     <p-fieldset legend="{{gameState.isStarted ? 'Game Started' : 'Welcome' }}" class="m-2">
         <div class="d-flex flex-column align-items-center justify-content-center p-2">
@@ -24,7 +25,7 @@
         <div class="d-flex flex-column align-items-center justify-content-center p-2">
 
             <p-button pRipple label="make an Offer" styleClass="p-button-outlined p-button-success m-2"
-                icon="pi pi-money-bill" (click)="showOffer()"></p-button>          
+                icon="pi pi-money-bill" (click)="showOffer()"></p-button>
 
         </div>
     </p-fieldset>

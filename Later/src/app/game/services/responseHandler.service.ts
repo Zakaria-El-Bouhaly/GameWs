@@ -37,11 +37,14 @@ export class ResponseHandlerService {
     console.log(message.Data);
 
     if (message.Action == "connected") {
-      localStorage.setItem("playerRole", "1");
-      this.gameService.gamePin.next(Data);      
-    }        
+      this.gameService.playerCount.next(Data.playerCount);
+      this.gameService.gamePin.next(Data.code);
+      this.gameService.playerRole.next(1);
+
+    }
     if (message.Action == "joined") {
-      localStorage.setItem("playerRole", "2");
+      this.gameService.playerCount.next(Data.playerCount);      
+      this.gameService.playerRole.next(2);
     }
 
 

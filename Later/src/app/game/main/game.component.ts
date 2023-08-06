@@ -41,6 +41,8 @@ export class GameComponent {
   // 1 : player , 2 : buyer
   playerRole: number = 0;
 
+  playerCount: number = 0;
+
   constructor(
     private webSocketService: WebSocketService,
     private gameService: GameService) { }
@@ -59,7 +61,27 @@ export class GameComponent {
       });
     });
 
-    this.playerRole = Number(localStorage.getItem("playerRole"));
+    // detect player role changes  
+    this.gameService.playerRole.subscribe((data: number) => {
+      if (this.playerRole != 1)             
+          this.playerRole = data;
+      console.log("playerRole", this.playerRole);
+    });
+
+    // detect changes in the player count
+    this.gameService.playerCount.subscribe((data: number) => {
+      this.playerCount = data;
+      console.log("playerCount", this.playerCount);
+      if (this.playerCount == 2) {
+        Swal.fire({
+          title: 'Game is ready to start',
+          icon: 'info',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+        });
+      }
+    });
+
     // detect game state changes
     this.gameService.gameState.subscribe((data: GameState) => {
       this.gameState = data;
@@ -136,7 +158,7 @@ export class GameComponent {
     });
 
     window.onbeforeunload = () => this.ngOnDestroy();
-    
+
   }
 
   showDialog() {
