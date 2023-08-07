@@ -43,6 +43,8 @@ export class WebSocketService {
   }
 
   sendMsg(action: string, data: string | null | number) {
+    if (!this.connection)
+      return
     let msg: WsMessage = { Action: action, Data: data };
     console.log("sending msg", msg);
     this.send(msg);

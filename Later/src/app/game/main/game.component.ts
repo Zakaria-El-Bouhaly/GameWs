@@ -63,8 +63,8 @@ export class GameComponent {
 
     // detect player role changes  
     this.gameService.playerRole.subscribe((data: number) => {
-      if (this.playerRole != 1)             
-          this.playerRole = data;
+      if (this.playerRole != 1)
+        this.playerRole = data;
       console.log("playerRole", this.playerRole);
     });
 
@@ -102,12 +102,12 @@ export class GameComponent {
         console.log("removed", removed);
         if (removed.length == 1)
           Swal.fire({
-            title: removed,
+            title: removed + "$",
             icon: 'info',
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Ok',
-            timer: 1000
-          });
+            timer: 1500
+          });                  
       }
       catch (e) {
         console.log("error");
@@ -125,7 +125,7 @@ export class GameComponent {
         // choose to accept or refuse the offer
 
         Swal.fire({
-          title: data,
+          title: data + "$",
           text: "Do you accept the offer? ",
           icon: 'question',
           confirmButtonColor: '#3085d6',
@@ -149,7 +149,7 @@ export class GameComponent {
     this.gameService.selectedAmount.subscribe((data: number) => {
       // show the selected amount in a popup 
       Swal.fire({
-        title: data,
+        title: data + "$",
         text: "the box had",
         icon: 'info',
         confirmButtonColor: '#3085d6',
@@ -194,6 +194,13 @@ export class GameComponent {
 
     this.webSocketService.sendMsg("makeOffer", this.offerValue);
     this.suggestOffer = false;
+  }
+
+  ignoreOffer() {
+    if (this.gameState.isOver || this.gameState.turn != 2 || !this.gameState.isStarted || this.playerRole != 2) {
+      return;
+    }
+    this.webSocketService.sendMsg("ignoreOffer", null);
   }
 
 

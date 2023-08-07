@@ -43,7 +43,7 @@ export class ResponseHandlerService {
 
     }
     if (message.Action == "joined") {
-      this.gameService.playerCount.next(Data.playerCount);      
+      this.gameService.playerCount.next(Data.playerCount);
       this.gameService.playerRole.next(2);
     }
 
@@ -69,15 +69,16 @@ export class ResponseHandlerService {
     }
 
     if (message.Action == "refuseOffer") {
-      if (localStorage.getItem("playerRole") == "2") {
-        Swal.fire({
-          title: 'Offer refused',
-          text: 'The player refused your offer',
-          icon: 'error',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Ok'
-        });
-      }
+
+      Swal.fire({
+        title: 'Offer refused',
+        text: 'The player refused your offer',
+        icon: 'error',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok',
+        timer: 1000
+      });
+
     }
 
   }

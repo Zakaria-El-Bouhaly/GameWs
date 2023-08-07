@@ -1,13 +1,14 @@
 <div class="container-fluid">
 
-    <app-welcome *ngIf="!gameState.isStarted   && playerCount < 2" >        
+    <app-welcome *ngIf="!gameState.isStarted   && playerCount < 2">
     </app-welcome>
 
     <p-fieldset legend="{{gameState.isStarted ? 'Game Started' : 'Welcome' }}" class="m-2">
         <div class="d-flex flex-column align-items-center justify-content-center p-2">
 
             <p-button pRipple label="Start" styleClass="p-button-outlined p-button-success" icon="pi pi-play"
-                (click)="startGame()" *ngIf="!gameState.isStarted"></p-button>
+                (click)="startGame()" *ngIf="!gameState.isStarted" [disabled]="playerRole !=1">
+            </p-button>
 
             <p-button pRipple label="Restart" styleClass="p-button-outlined p-button-warning" icon="pi pi-replay"
                 (click)="restartGame()" *ngIf="gameState.isOver"></p-button>
@@ -26,6 +27,11 @@
 
             <p-button pRipple label="make an Offer" styleClass="p-button-outlined p-button-success m-2"
                 icon="pi pi-money-bill" (click)="showOffer()"></p-button>
+
+
+            <p-button pRipple label="ignore" styleClass="p-button-outlined p-button-success m-2"
+                icon="pi pi-angle-double-right" (click)="ignoreOffer()"></p-button>
+
 
         </div>
     </p-fieldset>
@@ -54,14 +60,14 @@
             </ng-template>
             <ng-template pTemplate="body" let-amount>
                 <tr>
-                    <td>{{ amount}}</td>
+                    <td>{{ amount}} $</td>
                 </tr>
             </ng-template>
         </p-table>
     </p-dialog>
 
 
-    <p-dialog header="Offer a price" [(visible)]="suggestOffer" [style]="{width: '50vw'}">
+    <p-dialog header="Offer a price" [(visible)]="suggestOffer">
         <div class="d-flex flex-column align-items-center justify-content-center p-2">
 
             <p-inputNumber inputId="integeronly" [(ngModel)]="offerValue" class="m-2"> </p-inputNumber>

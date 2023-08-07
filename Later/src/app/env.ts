@@ -1,3 +1,3 @@
 export const environment = {
-    url: "http://localhost:5045"
+    url: "https://ryangosling-001-site1.etempurl.com"
 };

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { GameState } from '../Models/gamestate.model';
 import { box } from '../Models/box.model';
 
@@ -19,10 +19,10 @@ export class GameService {
 
 
   offerAmount: Subject<number> = new Subject<number>();
-  
+
   gamePin: Subject<string> = new Subject<string>();
   playerCount: Subject<number> = new Subject<number>();
-  playerRole: Subject<number> = new Subject<number>();
+  playerRole: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   selectedAmount: Subject<number> = new Subject<number>();
 
