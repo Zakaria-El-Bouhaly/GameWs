@@ -4,6 +4,12 @@ namespace lesgo.Services
     {
         private bool isStarted = false;
         private bool isOver = false;
+
+        private int[] intialValues ={
+            1, 10, 15, 20, 50, 100, 200, 250, 500,
+            5000, 10000,15000, 20000, 50000, 70000, 100000,
+            150000, 200000, 500000, 1000000
+        };
         private Dictionary<int, int> amounts = new Dictionary<int, int>();
         private int moves = 0;
 
@@ -30,10 +36,20 @@ namespace lesgo.Services
             isStarted = true;
             turn = 1;
 
+            int nbrVals = intialValues.Length;
+
             // fill the dictionary with random amounts of money indexes 1-20            
-            for (int i = 1; i <= 20; i++)
+            for (int i = 1; i <= nbrVals; i++)
             {
-                amounts.Add(i, rnd.Next(1, 100000));
+
+                int randomValue = intialValues[rnd.Next(0, nbrVals)];
+
+                while (amounts.ContainsValue(randomValue))
+                {
+                    randomValue = intialValues[rnd.Next(0, nbrVals)];
+                }
+
+                amounts.Add(i, randomValue);
             }
 
             // values wihout keys 
@@ -92,22 +108,28 @@ namespace lesgo.Services
                 return 0;
             }
 
-            if (moves % 4 == 0)
-            {
-                turn = 2;
-                return amounts[index];
-            }
-
             if (moves == 20)
             {
                 isOver = true;
                 return -1;
             }
 
+            if (moves % 4 == 0)
+            {
+                turn = 2;
+                return amounts[index];
+            }
+
+
             return amounts[index];
 
         }
 
+        public void ignoreOffer()
+        {
+            if (IsAllowed() && turn == 2)
+                turn = 1;
+        }
 
         public void refuseOffer()
         {
@@ -117,7 +139,8 @@ namespace lesgo.Services
 
         public void EndGame()
         {
-            if (IsAllowed()){
+            if (IsAllowed())
+            {
                 isOver = true;
                 isStarted = false;
             }

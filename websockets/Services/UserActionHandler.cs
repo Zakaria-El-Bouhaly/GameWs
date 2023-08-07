@@ -57,6 +57,13 @@ namespace lesgo.Services
                 await send("revealBox", gameStatus);
             }
 
+            if (request.Action == "ignoreOffer")
+            {
+                _gameService.ignoreOffer();
+                gameStatus = GameStatus();
+                await send("ignoreOffer", gameStatus);
+            }
+
             if (request.Action == "makeOffer") // turn 2
             {
                 // send offer to the other player

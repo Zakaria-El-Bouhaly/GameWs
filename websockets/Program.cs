@@ -17,6 +17,10 @@ builder.Services.AddSingleton<ConnectionManager>();
 builder.Services.AddSingleton<UserActionHandler>();
 builder.Services.AddSingleton<GameService>();
 
+builder.Services.AddHttpsRedirection(options =>
+{    
+    options.HttpsPort = 5001;
+});
 
 builder.Services.AddControllers();
 
@@ -27,12 +31,14 @@ var webSocketOptions = new WebSocketOptions
     KeepAliveInterval = TimeSpan.FromMinutes(2)
 };
 
+// use https
+app.UseHttpsRedirection();
+
 app.UseWebSockets(webSocketOptions);
 // use when hitting the endpoint
 
+
 app.MapControllers();
-
-
 
 
 app.UseMiddleware<WebSocketMiddleware>();
