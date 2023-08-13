@@ -1,23 +1,33 @@
-<nav class="navbar  sticky-top">
+<nav class="navbar  navbar-expand-lg sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="assets/agreement.png" alt="">
+            Chtara
+        </a>
+        
 
-    <a class="navbar-brand" href="#">
-        <img src="assets/agreement.png" alt="">
-        Chtara
-    </a>
-
-    <div class="d-flex flex-row align-items-center justify-content-center">
-
-        <p-button pRipple styleClass="p-button-rounded    m-2" class="header-btn" icon="pi pi-question"
-            (click)="showHelp()"></p-button>
-
-
-        <p-button pRipple styleClass="p-button-rounded     m-2" class="header-btn" icon="pi pi-github"
-            (click)="showGithub()"></p-button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
 
-        <p-button pRipple styleClass="p-button-rounded     m-2" class="header-btn" icon="pi pi-sun"
-            (click)="toggleMode()"></p-button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="d-flex flex-row align-items-center justify-content-center">
 
+                <p-button pRipple styleClass="p-button-rounded    m-2" class="header-btn" icon="pi pi-question"
+                    (click)="showHelp()"></p-button>
+
+
+                <p-button pRipple styleClass="p-button-rounded     m-2" class="header-btn" icon="pi pi-github"
+                    (click)="showGithub()"></p-button>
+
+
+                <p-button pRipple styleClass="p-button-rounded     m-2" class="header-btn" icon="pi pi-sun"
+                    (click)="toggleMode()"></p-button>
+
+            </div>
+        </div>
     </div>
 
 
@@ -45,6 +55,6 @@
 
     </p>
     <p *ngIf="option == 2">
-                
-    </p>    
+
+    </p>
 </p-dialog>

@@ -1,7 +1,7 @@
 .navbar {
     background-color: var(--cardColor);
     padding: 0;
-    border-radius: 80px;
+    border-radius: 50px;
     margin: 2% 8%;
 
     .navbar-brand {
@@ -17,7 +17,7 @@
         img {
             width: 3rem;
             height: 3rem;
-            margin-right: 1rem;
+            margin: 10px;
         }
     }
 }
@@ -30,6 +30,13 @@
         color: var(--textColor);
         background-color: var(--cardColor);
         border-color: var(--cardColor);
+    }
+    &:focus {
+        border-color: transparent;
+    }
+
+    &:active {
+        border-color: transparent;
     }
 }
 
@@ -49,5 +56,22 @@
         border-radius: 0 0 40px 40px;
         background-color: var(--bgColor);
         color: var(--textColor);
+    }
+}
+
+.navbar-toggler {
+    margin: 0 1rem;
+    border: none;
+    background-color: var(--cardSecondaryColor);
+    color: var(--textColor);
+    box-shadow: none;
+    border-radius: 80px;
+    &:hover {
+        color: var(--textColor);
+        background-color: var(--cardColor);
+    }   
+    
+    &:focus {
+     box-shadow: none;
     }
 }
