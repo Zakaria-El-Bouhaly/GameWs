@@ -1,0 +1,50 @@
+<nav class="navbar  sticky-top">
+
+    <a class="navbar-brand" href="#">
+        <img src="assets/agreement.png" alt="">
+        Chtara
+    </a>
+
+    <div class="d-flex flex-row align-items-center justify-content-center">
+
+        <p-button pRipple styleClass="p-button-rounded    m-2" class="header-btn" icon="pi pi-question"
+            (click)="showHelp()"></p-button>
+
+
+        <p-button pRipple styleClass="p-button-rounded     m-2" class="header-btn" icon="pi pi-github"
+            (click)="showGithub()"></p-button>
+
+
+        <p-button pRipple styleClass="p-button-rounded     m-2" class="header-btn" icon="pi pi-sun"
+            (click)="toggleMode()"></p-button>
+
+    </div>
+
+
+</nav>
+
+<p-dialog [header]="title" [(visible)]="visible" [style]="{width: '50vw'}">
+    <p *ngIf="option == 1">
+        <b>Game Rules :</b>
+        <br>
+        The first player creates a game a PIN is generated and the second player joins the game using the PIN.
+        <br>
+        The first player starts the game by clicking on the start button.
+        The game starts with 20 boxes each box contains a random amount of money between 1 and 1 000 000
+        The first player starts by selecting a box and keeps it until the end of the game,
+        and then he selects a box and the amount of money in the box is revealed.
+        after 8 selections the first player will wait for the second player to make an offer to buy the intially
+        selected
+        box, or ignore.
+        the first player can accept or reject the offer.
+
+        The game is over when the first player selects the last box.
+        or by accepting an offer from the second player.
+
+        the winner is the player with the highest amount of money
+
+    </p>
+    <p *ngIf="option == 2">
+                
+    </p>    
+</p-dialog>

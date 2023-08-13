@@ -108,13 +108,13 @@ namespace lesgo.Services
                 return 0;
             }
 
-            if (moves == 20)
+             if (moves == 20)
             {
                 isOver = true;
                 return -1;
             }
 
-            if (moves % 4 == 0)
+            if (moves % 8 == 0 || moves == 19)
             {
                 turn = 2;
                 return amounts[index];

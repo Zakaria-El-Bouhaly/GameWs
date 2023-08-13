@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ResponseHandlerService } from '../services/responseHandler.service';
 import { WebSocketService } from '../services/websocket.service';
 
@@ -9,7 +9,8 @@ import { WebSocketService } from '../services/websocket.service';
 })
 export class WelcomeComponent {
   PIN: string = "";
-  
+  @Input() playerRole: number = 0;
+
 
   constructor(
     private webSocketService: WebSocketService,
@@ -17,7 +18,7 @@ export class WelcomeComponent {
   ) { }
 
   createGame() {
-    
+
     this.webSocketService.setUrl("");
     // connect to the websocket
     this.webSocketService.connect().subscribe((data: any) => {

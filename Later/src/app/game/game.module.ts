@@ -15,13 +15,15 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { HeaderComponent } from '../components/header/header.component';
 
 
 @NgModule({
   declarations: [
     GameComponent,
     BoxComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     FieldsetModule,
     DialogModule,
     RippleModule,
-    SweetAlert2Module
+    SweetAlert2Module    ,
+    
 
   ],
   providers: [],

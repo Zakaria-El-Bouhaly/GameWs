@@ -1,2 +1,53 @@
 @import "primeicons/primeicons.css";
+@import "primeng/resources/themes/lara-light-indigo/theme.css";
 
+$bgColor_light: rgb(251, 251, 251);
+$bgColor_dark: rgb(32, 32, 32);
+
+$textColor_light: rgb(32, 32, 32);
+$textColor_dark: white;
+
+$borderColor_light: black;
+$borderColor_dark: white;
+
+$secondaryColor_light: rgb(243, 243, 243);
+$secondaryColor_dark: rgb(57, 57, 57);
+
+$cardColor_light: #deb4ff;
+$cardColor_dark:  #c8507e;  
+
+$cardSecondaryColor_light: #f3e5ff;
+$cardSecondaryColor_dark: #a33f66;
+
+// mixin that enables css variables in light mode
+@mixin lighten() {
+  --bgColor: #{$bgColor_light};
+  --textColor: #{$textColor_light};
+  --borderColor: #{$borderColor_light};
+  --secondaryColor: #{$secondaryColor_light};
+  --cardColor: #{$cardColor_light};
+  --cardSecondaryColor: #{$cardSecondaryColor_light};
+}
+
+// mixin that enables css variables in dark mode
+@mixin darken() {
+  --bgColor: #{$bgColor_dark};
+  --textColor: #{$textColor_dark};
+  --borderColor: #{$borderColor_dark};
+  --secondaryColor: #{$secondaryColor_dark};
+  --cardColor: #{$cardColor_dark};
+  --cardSecondaryColor: #{$cardSecondaryColor_dark};
+}
+
+body.dark {
+  @include darken();
+}
+body.light {
+  @include lighten();
+}
+
+body {
+  background-color: var(--bgColor);
+  color: var(--textColor);
+  transition: background-color 0.2s ease-in-out;
+}

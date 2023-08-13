@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { box } from '../Models/box.model';
 import { GameState } from '../Models/gamestate.model';
 import { GameService } from '../services/game.service';
-import { ResponseHandlerService } from '../services/responseHandler.service';
 import { WebSocketService } from '../services/websocket.service';
 
 
@@ -107,7 +105,7 @@ export class GameComponent {
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Ok',
             timer: 1500
-          });                  
+          });
       }
       catch (e) {
         console.log("error");
@@ -132,6 +130,8 @@ export class GameComponent {
           showDenyButton: true,
           confirmButtonText: 'Yes',
           denyButtonText: 'No',
+          allowOutsideClick: false,
+          allowEscapeKey: false
 
         }).then((result) => {
           if (result.isConfirmed) {
@@ -161,6 +161,8 @@ export class GameComponent {
 
   }
 
+
+
   showDialog() {
     this.visible = true;
   }
@@ -178,7 +180,7 @@ export class GameComponent {
   }
 
   startGame() {
-    if (this.gameState.isStarted) {
+    if (this.gameState.isStarted || this.playerCount != 2) {
       return;
     }
 
