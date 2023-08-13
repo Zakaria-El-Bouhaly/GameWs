@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="container-fluid">
+<div class="container-fluid col-lg-6 col-md-8 col-sm-12 col-xs-12">
 
     <app-welcome *ngIf="!gameState.isStarted   && playerCount < 2" [playerRole]="playerRole">
     </app-welcome>
@@ -54,17 +54,19 @@
 
 
 
-    <p-dialog header="{{availableAmounts.length}}" [(visible)]="visible" [style]="{width: '50vw'}">
-        <p-table [value]="availableAmounts" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-dialog header="{{availableAmounts.length}}" [(visible)]="visible" [style]="{width: '80vw'}">
+        <p-table [value]="availableAmounts">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Amount</th>
+                    <th class="text-center">Amount</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-amount>
                 <tr>
-                    <td [ngClass]="{'text-danger': amount <10000 , 'text-success': amount >= 10000 }">
-                        {{ amount}} $</td>
+                    <td [ngClass]="{'text-danger': amount <10000 , 'text-success': amount >= 10000 }"
+                        class="text-center">
+                        <b>{{ amount}} $</b>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>

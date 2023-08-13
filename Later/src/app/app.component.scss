@@ -1,0 +1,41 @@
+:host ::ng-deep .p-dialog {
+    box-shadow: none;
+    width: 50vw;
+
+    .p-dialog-header-close-icon {
+        color: var(--textColor);
+    }
+
+    .p-dialog-header {
+        border-radius: 40px 40px 0 0;
+        background-color: var(--cardSecondaryColor);
+        color: var(--textColor);
+    }
+    .p-dialog-footer {
+        border-radius: 0 0 40px 40px;
+        background-color: var(--cardColor);
+        color: var(--textColor);
+    }
+    .p-dialog-content {
+        border-radius: 0 0 40px 40px;
+        background-color: var(--bgColor);
+        color: var(--textColor);
+    }
+
+    @media screen and (max-width: 576px) {
+        width: 80vw;
+    }
+}
+
+:host ::ng-deep .p-datatable-table {
+    background-color: var(--bgColor);
+    color: var(--textColor);
+    .p-datatable-thead > tr > th {
+        background-color: var(--bgColor);
+        color: var(--textColor);
+    }
+
+    .p-datatable-tbody > tr > td {
+        background-color: var(--bgColor);
+    }
+}

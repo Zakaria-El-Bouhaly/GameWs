@@ -1,13 +1,10 @@
 // colors variables
 $color-primary: var(--cardColor);
 
-.container-fluid {
-    width: 80%;
-}
 
 
 :host ::ng-deep .p-fieldset {
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px;
     border-width: 0px;
     color: var(--textColor);
     background-color: var(--secondaryColor);
@@ -21,6 +18,9 @@ $color-primary: var(--cardColor);
 }
 
 :host ::ng-deep .p-inputnumber-input {
-    border-radius: 20px;    
+    border-radius: 40px;    
 }
+
+
+
 

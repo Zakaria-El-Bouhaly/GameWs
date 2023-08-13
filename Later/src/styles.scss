@@ -14,7 +14,7 @@ $secondaryColor_light: rgb(243, 243, 243);
 $secondaryColor_dark: rgb(57, 57, 57);
 
 $cardColor_light: #deb4ff;
-$cardColor_dark:  #c8507e;  
+$cardColor_dark: #c8507e;
 
 $cardSecondaryColor_light: #f3e5ff;
 $cardSecondaryColor_dark: #a33f66;
@@ -51,3 +51,49 @@ body {
   color: var(--textColor);
   transition: background-color 0.2s ease-in-out;
 }
+
+.swal2-popup {
+  background-color: var(--bgColor);
+  color: var(--textColor);
+  border-radius: 40px;
+}
+
+.swal2-title {
+  color: var(--textColor);
+}
+
+.swal2-content {
+  color: var(--textColor);
+}
+
+.swal2-icon {
+  color: var(--textColor);
+}
+
+.swal2-styled.swal2-confirm {
+  border-radius: 40px;
+  background-color: var(--cardSecondaryColor);
+  color: var(--textColor);
+  &:hover {
+    background-color: var(--cardColor);
+  }
+}
+
+.swal2-styled.swal2-cancel {
+  border-radius: 40px;
+  background-color: var(--cardSecondaryColor);
+  color: var(--textColor);
+  &:hover {
+    background-color: var(--cardColor);
+  }
+}
+
+.swal2-styled.swal2-deny {
+  border-radius: 40px;
+  background-color: var(--cardSecondaryColor);
+  color: var(--textColor);
+  &:hover {
+    background-color: var(--cardColor);
+  }
+}
+

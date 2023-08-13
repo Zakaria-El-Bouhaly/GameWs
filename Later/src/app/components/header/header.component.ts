@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ThemeSwitcherService } from 'src/app/services/theme-switcher.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +9,24 @@ import { ThemeSwitcherService } from 'src/app/services/theme-switcher.service';
 })
 export class HeaderComponent {
 
+  data=
+  [
+    {
+      "id": 1,
+      "name": "Leanne Graham",
+    },
+    {
+      "id": 2,
+      "name": "Ervin Howell",
+    }
+  ]
 
   constructor(
     private themeSwitcherService: ThemeSwitcherService,
   ) {
   }
 
-  
+
   visible = false;
   option: number = 0;
   title: string = '';
@@ -29,6 +41,7 @@ export class HeaderComponent {
     this.visible = true;
     this.option = 2;
     this.title = 'Github';
+
   }
 
   toggleMode() {
