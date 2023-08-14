@@ -137,7 +137,7 @@ export class GameComponent {
           if (result.isConfirmed) {
             this.webSocketService.sendMsg("acceptOffer", null);
           }
-          if (result.isDenied) {
+          else if (result.isDenied) {
             this.webSocketService.sendMsg("refuseOffer", null);
           }
         })

@@ -12,10 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 
-builder.Services.AddSingleton<WebSocketHandler>();
+builder.Services.AddScoped<WebSocketHandler>();
 builder.Services.AddSingleton<ConnectionManager>();
-builder.Services.AddSingleton<UserActionHandler>();
-builder.Services.AddSingleton<GameService>();
+builder.Services.AddScoped<UserActionHandler>();
+builder.Services.AddScoped<GameService>();
 
 builder.Services.AddHttpsRedirection(options =>
 {    

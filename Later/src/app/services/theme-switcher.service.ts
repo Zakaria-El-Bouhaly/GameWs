@@ -1,7 +1,6 @@
 import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable } from '@angular/core';
 import { Mode } from "./mode.model";
-import { BehaviorSubject, Subject } from "rxjs";
 import { StorageService } from "./storage.service";
 
 @Injectable({

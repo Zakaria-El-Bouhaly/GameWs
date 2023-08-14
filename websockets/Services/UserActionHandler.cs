@@ -38,7 +38,7 @@ namespace lesgo.Services
                 await send("startGame", gameStatus);
             }
 
-            if (request.Action == "selectBox")
+            else if (request.Action == "selectBox")
 
             {
                 // player selected a box
@@ -57,21 +57,21 @@ namespace lesgo.Services
                 await send("revealBox", gameStatus);
             }
 
-            if (request.Action == "ignoreOffer")
+            else if (request.Action == "ignoreOffer")
             {
                 _gameService.ignoreOffer();
                 gameStatus = GameStatus();
                 await send("ignoreOffer", gameStatus);
             }
 
-            if (request.Action == "makeOffer") // turn 2
+            else if (request.Action == "makeOffer") // turn 2
             {
                 // send offer to the other player
                 gameStatus.Add("offer", request.Data);
                 await send("makeOffer", gameStatus);
             }
 
-            if (request.Action == "acceptOffer") // turn 1
+            else if (request.Action == "acceptOffer") // turn 1
             {
                 _gameService.EndGame();
                 gameStatus = GameStatus();
@@ -79,7 +79,7 @@ namespace lesgo.Services
                 await send("acceptOffer", gameStatus);
             }
 
-            if (request.Action == "refuseOffer") // turn 1
+            else if (request.Action == "refuseOffer") // turn 1
             {
                 _gameService.refuseOffer();
                 gameStatus = GameStatus();

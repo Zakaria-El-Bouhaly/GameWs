@@ -42,33 +42,33 @@ export class ResponseHandlerService {
       this.gameService.playerRole.next(1);
 
     }
-    if (message.Action == "joined") {
+    else if (message.Action == "joined") {
       this.gameService.playerCount.next(Data.playerCount);
       this.gameService.playerRole.next(2);
     }
 
 
-    if (message.Action == "startGame") {
+    else if (message.Action == "startGame") {
       this.gameService.setAmounts(JSON.parse(Data.amounts));
     }
 
-    if (message.Action == "revealBox") {
+    else if (message.Action == "revealBox") {
       this.gameService.removeIndex(Data.index, Data.amount);
       if (Data.isOver) {
         this.gameService.selectedAmount.next(Data.selected);
       }
     }
 
-    if (message.Action == "makeOffer") {
+    else if (message.Action == "makeOffer") {
       this.gameService.offerAmount.next(Data.offer);
     }
 
-    if (message.Action == "acceptOffer") {
+    else if (message.Action == "acceptOffer") {
       this.gameService.updateGameStatus(Data.isOver);
       this.gameService.selectedAmount.next(Data.selected);
     }
 
-    if (message.Action == "refuseOffer") {
+    else if (message.Action == "refuseOffer") {
 
       Swal.fire({
         title: 'Offer refused',
