@@ -13,16 +13,8 @@ export class BoxComponent {
   @Input() isDisabled: boolean = false;
 
   @Output() selectIndex = new EventEmitter<number>();
-
-
-
-  img: string = "";
-
-
-
-  ngOnInit(): void {
-    this.img = "box" + (Math.floor(Math.random() * 7) + 1) + ".png";
-  }
+  
+  
 
 
   sendNumber(num: number) {

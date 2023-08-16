@@ -4,7 +4,8 @@
         <p-button pRipple label="Create a game" styleClass="p-button-outlined p-button-rounded p-button-success m-1"
             icon="pi pi-play" (click)="createGame()"></p-button>
 
-        <p-inputNumber *ngIf="playerRole != 1" inputId="integeronly" [(ngModel)]="PIN" class="m-2"> </p-inputNumber>
+        <p-inputNumber *ngIf="playerRole != 1" inputId="integeronly" [(ngModel)]="PIN" placeholder="Enter PIN"
+         class="m-2"> </p-inputNumber>
 
         <p-button pRipple label="Join" styleClass="p-button-outlined p-button-rounded p-button-success m-2" 
             icon="pi pi-user-plus" *ngIf="playerRole != 1" (click)="joinGame()"></p-button>

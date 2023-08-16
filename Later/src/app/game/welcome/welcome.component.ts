@@ -8,7 +8,7 @@ import { WebSocketService } from '../services/websocket.service';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent {
-  PIN: string = "";
+  PIN!: string;
   @Input() playerRole: number = 0;
 
 

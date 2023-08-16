@@ -7,7 +7,7 @@ $bgColor_dark: rgb(32, 32, 32);
 $textColor_light: rgb(32, 32, 32);
 $textColor_dark: white;
 
-$borderColor_light: black;
+$borderColor_light: rgb(78, 78, 78);
 $borderColor_dark: white;
 
 $secondaryColor_light: rgb(243, 243, 243);
@@ -32,8 +32,7 @@ $cardSecondaryColor_dark: #a33f66;
 // mixin that enables css variables in dark mode
 @mixin darken() {
   --bgColor: #{$bgColor_dark};
-  --textColor: #{$textColor_dark};
-  --borderColor: #{$borderColor_dark};
+  --textColor: #{$textColor_dark};  
   --secondaryColor: #{$secondaryColor_dark};
   --cardColor: #{$cardColor_dark};
   --cardSecondaryColor: #{$cardSecondaryColor_dark};
